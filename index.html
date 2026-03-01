@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手元日記 - サポート</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #2a2a2a;
+      --accent: #7c9a7e;
+      --text: #e0e0e0;
+      --text-muted: #888;
+      --text-dim: #555;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── ヘッダー ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+
+    .app-icon {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 480px;
+      margin: 0 auto 24px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .badge:hover {
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── ナビゲーション ── */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    nav a {
+      padding: 14px 24px;
+      font-size: 14px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text);
+      border-bottom-color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── メインコンテンツ ── */
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    section { margin-bottom: 64px; }
+
+    section h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── 特徴カード ── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .feature-card .icon { font-size: 28px; margin-bottom: 10px; }
+    .feature-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .feature-card p { font-size: 13px; color: var(--text-muted); }
+
+    /* ── FAQ ── */
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      padding: 16px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: "+"; color: var(--text-muted); flex-shrink: 0; }
+    .faq-item[open] summary::after { content: "−"; }
+
+    .faq-item .answer {
+      padding: 0 20px 16px;
+      font-size: 14px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    /* ── プライバシーポリシー ── */
+    .policy-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .policy-block h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .policy-block p, .policy-block li {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .policy-block ul { padding-left: 20px; }
+    .policy-block li { margin-bottom: 6px; }
+
+    .policy-updated {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+    }
+
+    /* ── お問い合わせ ── */
+    .contact-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .contact-box p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .contact-box a.button {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .contact-box a.button:hover {
+      opacity: 0.85;
+      text-decoration: none;
+    }
+
+    /* ── フッター ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    footer a { color: var(--text-dim); }
+
+    @media (max-width: 480px) {
+      header h1 { font-size: 22px; }
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header>
+  <div class="app-icon">📓</div>
+  <h1>手元日記</h1>
+  <p>クラウドに一切送らない、あなただけの暗号化日記</p>
+  <div class="badges">
+    <!-- App Store リンクが決まったら href を差し替える -->
+    <a class="badge" href="#" aria-label="App Store でダウンロード">
+      🍎 App Store
+    </a>
+    <a class="badge" href="#" aria-label="Google Play でダウンロード">
+      ▶ Google Play
+    </a>
+  </div>
+</header>
+
+<!-- ナビゲーション -->
+<nav>
+  <a href="#features" class="active">特徴</a>
+  <a href="#faq">よくある質問</a>
+  <a href="#privacy">プライバシーポリシー</a>
+  <a href="#req">利用規約</a>
+  <a href="#contact">お問い合わせ</a>
+</nav>
+
+<main>
+
+  <!-- 特徴 -->
+  <section id="features">
+    <h2>特徴</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">🔒</div>
+        <h3>完全オフライン暗号化</h3>
+        <p>オンデバイス暗号化。仕事の内容やプライベートな情報を書き込んでもインターネットやAIに情報が流出するおそれがありません</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📵</div>
+        <h3>分析・広告 SDK ゼロ</h3>
+        <p>行動分析・クラッシュレポート・広告 SDK を一切含んでいません</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="icon">📦</div>
+        <h3>バックアップ</h3>
+        <p>暗号化された日記をGoogle Driveにバックアップ可能。暗号化されているためパスフレーズの流出や推測されない限りGoogleにも情報が読み取れません</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🖼</div>
+        <h3>画像の暗号化</h3>
+        <p>写真も本文と同じ鍵で暗号化して保存。本体側の写真アプリから削除しても暗号化して情報が残り続けます</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- よくある質問 -->
+  <section id="faq">
+    <h2>よくある質問</h2>
+
+    <details class="faq-item">
+      <summary>日記のデータはどこに保存されますか？</summary>
+      <div class="answer">
+        すべてのデータはお使いの端末内にのみ保存されます。
+        クラウドサーバーや外部サービスへの送信は行いません。
+        バックアップファイルの保存先はご自身でご指定ください。
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>パスフレーズを忘れた場合はどうなりますか？</summary>
+      <div class="answer">
+        パスフレーズを忘れた場合、データの復号はできません。
+        これは意図した設計です。開発者にもデータを読む手段はなく、
+        リカバリー機能は提供しておりません。パスフレーズは安全な場所に控えておくことをお勧めします。
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>サブスクリプションを解約したら過去のデータは消えますか？</summary>
+      <div class="answer">
+        消えません。ただしサブスクリプション未加入の場合は8日以上の日記記入ができなくなります。
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>機種変更の際にデータを引き継ぐことはできますか？</summary>
+      <div class="answer">
+        バックアップファイル（.diary 形式）を書き出し、新しい端末に転送してリストアすることで引き継げます。
+        Google Drive経由(暗号化された日記)等をお使いください
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>iPhoneからAndroidまたはその逆のデータ移行は可能ですか？</summary>
+      <div class="answer">
+        可能です。Google Drive経由(暗号化された日記)等を使い移行してください。
+      </div>
+    </details>
+    
+    <details class="faq-item">
+      <summary>暗号化はどのような方式ですか？</summary>
+      <div class="answer">
+        鍵導出に Argon2id（メモリ 64MB、反復 3 回）、暗号化に AES-256-GCM を使用しています。
+        IV（ nonce）はエントリーごとにランダム生成し、GCM 認証タグで改ざん検知を行います。
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>料金はいくらですか？</summary>
+      <div class="answer">
+        インストールから 14 日間は全機能を無料でお試しいただけます。
+        その後は月額 100 円（税込）のサブスクリプションで引き続きご利用いただけます。
+        価格は地域により異なる場合があります。
+      </div>
+    </details>
+
+  </section>
+
+  <!-- プライバシーポリシー -->
+  <section id="privacy">
+    <h2>プライバシーポリシー</h2>
+    <p class="policy-updated">最終更新日: 2026年3月1日</p>
+
+    <div class="policy-block">
+      <h3>収集する情報</h3>
+      <p>手元日記は、いかなる個人情報も収集・送信しません。
+        日記の本文・画像・動画・パスフレーズはすべてお客様の端末内にのみ保存されます。</p>
+    </div>
+
+    <div class="policy-block">
+      <h3>第三者への情報提供</h3>
+      <p>お客様のデータを第三者と共有・販売・提供することは一切ありません。</p>
+    </div>
+
+    <div class="policy-block">
+      <h3>アプリが使用しないもの</h3>
+      <ul>
+        <li>アクセス解析・行動トラッキング SDK</li>
+        <li>クラッシュレポート SDK（Crashlytics・Sentry 等）</li>
+        <li>広告 SDK（AdMob 等）</li>
+        <li>クラウドバックエンド（Firebase・Supabase 等）</li>
+      </ul>
+    </div>
+
+    <div class="policy-block">
+      <h3>課金情報</h3>
+      <p>サブスクリプションの決済は Apple / Google のプラットフォームを通じて行われ、
+        カード番号などの決済情報は当アプリに送信されません。</p>
+    </div>
+
+    <div class="policy-block">
+      <h3>バックアップ</h3>
+      <p>バックアップファイルはお客様が手動で書き出した場合にのみ生成されます。
+        アプリが自動でクラウドへ送信することはありません。
+        ファイルの保管はお客様の責任となります。</p>
+    </div>
+
+    <div class="policy-block">
+      <h3>本ポリシーの変更</h3>
+      <p>ポリシーを変更した場合は本ページを更新します</p>
+    </div>
+  </section>
+
+  <!-- プライバシーポリシー -->
+  <section id="req">
+    <h2>利用規約および免責事項</h2>
+    <p class="policy-updated">最終更新日: 2026年3月1日</p>
+
+    <div class="policy-block">
+      <h3>第1条（データの管理と暗号化）</h3>
+　　　　<ol>
+          <li>本アプリで作成された日記データ（文章・画像等）は、ユーザーの端末内に保存されます</li>
+          <li>ユーザーが外部ストレージ（Google Drive等）へのバックアップ機能を利用する場合、データはアプリ固有の方式により暗号化された状態でアップロードされます</li>
+          <li>開発者は、ユーザーの暗号化されたデータおよび復号に必要な情報（パスワード等）を一切保持せず、その内容を閲覧または利用することはありません</li>
+      </ol>
+    </div>
+
+    <div class="policy-block">
+      <h3>第2条（データの管理と暗号化）</h3>
+　　　　<ol>
+          <li>ユーザーは、自己の責任において日記データおよびバックアップ用の外部ストレージを管理するものとします</li>
+          <li>データの復号に必要なパスワード等の管理はユーザーの責任とし、これを紛失したことによるデータの復旧不能について、開発者は一切の責任を負いません</li>
+      </ol>
+    </div>
+
+    <div class="policy-block">
+      <h3>第3条（免責事項）/h3>
+        <li>開発者は、本アプリの不具合や仕様変更に起因するデータの消失、破損、または復旧不能な状態について、一切の責任を負わないものとします</li>
+        <li>本アプリの利用（インストール、アップデート、アンインストールを含む）に伴い、ユーザーのスマートフォン本体、保存されている他のデータ、またはGoogle Drive等の外部システムにおいて生じた動作不良、データの破損、その他一切の損害について、開発者は責任を負いません</li>
+        <li>本アプリから外部ストレージへ保存されたデータの漏洩、消失、改ざん等の損害について、開発者は一切の責任を負いません。通信環境や外部サービスの不備に起因するトラブルも同様とします</li>
+        <li>万一、本アプリの利用に関して開発者が損害賠償責任を負う場合であっても、その賠償額はユーザーが開発者に支払った直近1ヶ月分の利用料金の額を上限とします</li>
+    </div>
+
+
+  </section>
+
+  
+
+  <!-- お問い合わせ -->
+  <section id="contact">
+    <h2>お問い合わせ</h2>
+    <div class="contact-box">
+      <p>ご不明な点・バグ報告・機能のご要望はメールでお気軽にご連絡ください。<br>
+        ※ パスフレーズの復元はいかなる場合もお応えできません。</p>
+      <!-- メールアドレスを差し替える -->
+      <a class="button" href="mailto:unbindlabs@gmail.com">メールで問い合わせる</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- フッター -->
+<footer>
+  <p>
+    &copy; 2026 手元日記 &nbsp;|&nbsp;
+    <a href="#privacy">プライバシーポリシー</a> &nbsp;|&nbsp;
+    <a href="#contact">サポート</a>
+  </p>
+</footer>
+
+</body>
+</html>
